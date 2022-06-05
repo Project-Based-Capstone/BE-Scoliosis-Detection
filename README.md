@@ -86,7 +86,7 @@
 
 ## GET Records Detection Request
 
-- Endpoint : `/api/v1/records`
+- Endpoint : `/api/v1/record`
 - HTTP Method : `GET`
 - Request Header :
   - Accept : `x-www-form-urlencoded`
@@ -122,7 +122,7 @@
 
 ## GET Records Details Detection Request
 
-- Endpoint : `/api/v1/records/{id}`
+- Endpoint : `/api/v1/record/{id}`
 - HTTP Method : `GET`
 - Request Header :
   - Accept : `x-www-form-urlencoded`
@@ -148,7 +148,7 @@
 
 ## Add Records Detection Request
 
-- Endpoint : `/api/v1/records`
+- Endpoint : `/api/v1/record`
 - HTTP Method : `POST`
 
 - Request Body :
@@ -187,7 +187,7 @@
 
 ## Delete Records Detection Request
 
-- Endpoint : `/api/v1/records/1`
+- Endpoint : `/api/v1/record/1`
 - HTTP Method : `DELETE`
 - Request Header :
   - Accept : `x-www-form-urlencoded`
