@@ -1,9 +1,11 @@
 from datetime import datetime
+import json
 from flask import Blueprint, jsonify, request
+import numpy as np
 from src.constants.http_status_codes import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_500_INTERNAL_SERVER_ERROR
 from src.config.database import db
 import os
-from src.models.RecordsDetection import RecordsDetection
+from src.models.RecordsDetection import RecordsDetection, predict_image
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import current_app
 from google.cloud import storage
@@ -27,12 +29,10 @@ def handle_record():
         try:
             name = request.form.get("name", '')
             dateOfBirth = request.form.get("dateOfBirth", '')
-
             file = request.form.get('file')
             fileSvc = FileService(file)
-            
             image = fileSvc.openImage()
-
+            result = predict_image(image)
             if file and allowed_file(image.format.lower()):
                 dt = datetime.today()
                 filename = str(round(dt.timestamp())) + '.' + image.format.lower()
@@ -56,7 +56,7 @@ def handle_record():
                 os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
 
             record = RecordsDetection(name=name, image=filename, dateOfBirth=dateOfBirth,
-                                      detection='Berisiko', description='Segera hubungi dokter terdekat anda',
+                                      detection=result['category'], description=result['description'],
                                       user_id=current_user)
             db.session.add(record)
             db.session.commit()
