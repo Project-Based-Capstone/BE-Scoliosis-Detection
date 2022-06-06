@@ -37,8 +37,14 @@ def handle_record():
             fileSvc = FileService(file)
             image = fileSvc.openImage()
             if(os.environ.get("FLASK_ENV") == 'production'):
-                result = predict_image(image)
-            
+                try:
+                    result = predict_image(image)
+                except: 
+                    return jsonify({
+                            'error': True,
+                            'message': 'Internal Prediction Image Server Error',
+                        }), HTTP_500_INTERNAL_SERVER_ERROR 
+                    
             if file and allowed_file(image.format.lower()):
                 dt = datetime.today()
                 filename = str(round(dt.timestamp())) + '.' + image.format.lower()
