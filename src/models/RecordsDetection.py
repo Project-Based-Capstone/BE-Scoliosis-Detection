@@ -44,7 +44,7 @@ def predict_json(model, instances, version=None):
 def predict_image(image):
     category={
         1: {
-            'category': 'Normal / Tidak Berisiko Scoliosis',
+            'category': 'Tidak Berisiko',
             'description': 'Tetap Jaga kesehatan anda'
         },
         0: {
