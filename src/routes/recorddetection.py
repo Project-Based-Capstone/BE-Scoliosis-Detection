@@ -57,7 +57,7 @@ def handle_record():
                     except:
                         return jsonify({
                             'error': True,
-                            'message': 'Internal Server Error',
+                            'message': 'Internal Image Server Error',
                         }), HTTP_500_INTERNAL_SERVER_ERROR    
                 os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
 
