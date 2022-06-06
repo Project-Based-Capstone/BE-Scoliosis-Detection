@@ -51,7 +51,7 @@ def handle_record():
                 dt = datetime.today()
                 filename = str(round(dt.timestamp())) + '.' + image.format.lower()
                 image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                if(os.environ.get("FLASK_ENV") == 'production'):
+                if(os.environ.get("FLASK_LOCATION") == 'local'):
                     try:
                         bucket_name = "scoliosis-detection"
                         source_file_name = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
@@ -152,6 +152,12 @@ def delete_record(id):
 
     if not record:
         return jsonify({'message': 'Item not found'}), HTTP_404_NOT_FOUND
+
+    storage_client = storage.Client()
+    bucket_name = "scoliosis-detection"
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(f"tmp/{(record.image)}")
+    blob.delete()
 
     db.session.delete(record)
     db.session.commit()
