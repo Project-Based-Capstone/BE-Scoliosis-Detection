@@ -25,6 +25,10 @@ def allowed_file(filename):
 @jwt_required()
 def handle_record():
     current_user = get_jwt_identity()
+    result = {
+            'category': 'Berisiko Scoliosis',
+            'description': 'Segera hubungi dokter tulang belakang terdekat!!'
+        }
     if request.method == 'POST':
         try:
             name = request.form.get("name", '')
@@ -32,7 +36,9 @@ def handle_record():
             file = request.form.get('file')
             fileSvc = FileService(file)
             image = fileSvc.openImage()
-            result = predict_image(image)
+            if(os.environ.get("FLASK_ENV") == 'production'):
+                result = predict_image(image)
+            
             if file and allowed_file(image.format.lower()):
                 dt = datetime.today()
                 filename = str(round(dt.timestamp())) + '.' + image.format.lower()
