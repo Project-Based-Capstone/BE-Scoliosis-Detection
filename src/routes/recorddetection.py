@@ -36,6 +36,7 @@ def handle_record():
             if(os.environ.get("FLASK_ENV") == 'production'):
                 try:
                     result = predict_image(image)
+                    return result
                 except: 
                     return jsonify({
                             'error': True,
@@ -47,33 +48,33 @@ def handle_record():
                     'description': 'Segera hubungi dokter tulang belakang terdekat!!'
                 }      
                  
-            if file and allowed_file(image.format.lower()):
-                dt = datetime.today()
-                filename = str(round(dt.timestamp())) + '.' + image.format.lower()
-                image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                if(os.environ.get("FLASK_ENV") == 'production'):
-                    try:
-                        bucket_name = "scoliosis-detection"
-                        source_file_name = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-                        destination_blob_name = f"tmp/{(filename)}"
+            # if file and allowed_file(image.format.lower()):
+            #     dt = datetime.today()
+            #     filename = str(round(dt.timestamp())) + '.' + image.format.lower()
+            #     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            #     if(os.environ.get("FLASK_ENV") == 'production'):
+            #         try:
+            #             bucket_name = "scoliosis-detection"
+            #             source_file_name = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            #             destination_blob_name = f"tmp/{(filename)}"
 
-                        storage_client = storage.Client()
-                        bucket = storage_client.bucket(bucket_name)
-                        blob = bucket.blob(destination_blob_name)
+            #             storage_client = storage.Client()
+            #             bucket = storage_client.bucket(bucket_name)
+            #             blob = bucket.blob(destination_blob_name)
 
-                        blob.upload_from_filename(source_file_name)
-                    except:
-                        return jsonify({
-                            'error': True,
-                            'message': 'Internal Image Server Error',
-                        }), HTTP_500_INTERNAL_SERVER_ERROR    
-                os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            #             blob.upload_from_filename(source_file_name)
+            #         except:
+            #             return jsonify({
+            #                 'error': True,
+            #                 'message': 'Internal Image Server Error',
+            #             }), HTTP_500_INTERNAL_SERVER_ERROR    
+            #     os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
 
-            record = RecordsDetection(name=name, image=filename, dateOfBirth=dateOfBirth,
-                                      detection=result['category'], description=result['description'],
-                                      user_id=current_user)
-            db.session.add(record)
-            db.session.commit()
+            # record = RecordsDetection(name=name, image=filename, dateOfBirth=dateOfBirth,
+            #                           detection=result['category'], description=result['description'],
+            #                           user_id=current_user)
+            # db.session.add(record)
+            # db.session.commit()
 
             return jsonify({
                 'error': False,
