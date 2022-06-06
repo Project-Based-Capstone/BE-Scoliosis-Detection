@@ -25,10 +25,7 @@ def allowed_file(filename):
 @jwt_required()
 def handle_record():
     current_user = get_jwt_identity()
-    result = {
-            'category': 'Berisiko Scoliosis',
-            'description': 'Segera hubungi dokter tulang belakang terdekat!!'
-        }
+    
     if request.method == 'POST':
         try:
             name = request.form.get("name", '')
@@ -44,7 +41,12 @@ def handle_record():
                             'error': True,
                             'message': 'Internal Prediction Image Server Error',
                         }), HTTP_500_INTERNAL_SERVER_ERROR 
-                    
+            else:
+                result = {
+                    'category': 'Berisiko Scoliosis',
+                    'description': 'Segera hubungi dokter tulang belakang terdekat!!'
+                }      
+                 
             if file and allowed_file(image.format.lower()):
                 dt = datetime.today()
                 filename = str(round(dt.timestamp())) + '.' + image.format.lower()
