@@ -148,7 +148,7 @@
 
 ## Add Records Detection Request
 
-- Endpoint : `/api/v1/record`
+- Endpoint : `/api/v1/record/`
 - HTTP Method : `POST`
 
 - Request Body :
