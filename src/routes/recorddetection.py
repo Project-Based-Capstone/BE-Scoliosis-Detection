@@ -80,7 +80,7 @@ def handle_record():
         except:
             return jsonify({
                 'error': True,
-                'message': 'Internal Server Error',
+                'message': 'Internal Server Error.',
             }), HTTP_500_INTERNAL_SERVER_ERROR
     else:
         # page = request.args.get('page', 1, type=int)
