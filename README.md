@@ -153,7 +153,7 @@
 - HTTP Method : `POST`
 
 - Request Body :
-
+  - file type `base64`
 ```json
 {
   "name": "Zico",
