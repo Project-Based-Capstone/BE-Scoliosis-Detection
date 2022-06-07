@@ -11,7 +11,11 @@ class FileService:
     b64 = BytesIO(b64)  
     return b64
  
-  def openImage(self):
+  def openImageBase64(self):
     img = Image.open(self.decodeAndCoverted())
-    return img 
+    return img
+  
+  def openImage(self):
+    img = Image.open(self.img)
+    return img
   
