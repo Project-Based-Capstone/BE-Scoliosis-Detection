@@ -15,13 +15,22 @@ def register():
     password = request.form.get("password", '')
     
     if len(password) < 6:
-        return jsonify({'error':  "Password is too short"}), HTTP_400_BAD_REQUEST
+        return jsonify({
+            'error':  True,
+            'message': "Password is too short"
+        }), HTTP_400_BAD_REQUEST
     
     if not validators.email(email):
-        return jsonify({'error': "Email is not valid"}), HTTP_400_BAD_REQUEST
+        return jsonify({
+            'error':  True,
+            'message': "Email is not valid"
+        }), HTTP_400_BAD_REQUEST
 
     if User.query.filter_by(email=email).first() is not None:
-        return jsonify({'error': "Email is taken"}), HTTP_409_CONFLICT
+        return jsonify({
+            'error': True,
+            'message': "Email is taken"
+        }), HTTP_409_CONFLICT
 
     pwd_hash = generate_password_hash(password)
 
@@ -63,7 +72,8 @@ def login():
             
     return jsonify({
         'error': True,
-        'message': 'Email or Password can not be found'
+        'message': 'Email or Password can not be found',
+        'user': None
     }), HTTP_401_UNAUTHORIZED
 
 @auth.get('/me')
