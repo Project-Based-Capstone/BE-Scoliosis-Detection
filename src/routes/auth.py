@@ -61,7 +61,10 @@ def login():
 
             }), HTTP_200_OK
             
-    return jsonify({'error': 'Wrong credentials'}), HTTP_401_UNAUTHORIZED
+    return jsonify({
+        'error': True,
+        'message': 'Email or Password can not be found'
+    }), HTTP_401_UNAUTHORIZED
 
 @auth.get('/me')
 @jwt_required()
