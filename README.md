@@ -153,17 +153,12 @@
 - HTTP Method : `POST`
 
 - Request Body :
-  - file type `base64`
-```json
-{
-  "name": "Zico",
-  "dateOfBirth": 12,
-  "file": "iVBORw0KGgoAAAANSUhEUgAAAYAAAAAdCAYAAACjSLuWAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABy8SURBVHhe7V0HfBRl3n6272aTbHoo0oJIlSJIE0EgcEgRIRRR8RP0VBQ4NOfRxAOkIxYQQhFEPOthQdEP9Y4m2A5OBARUTkFqSIAUsm12Zr7nP5tIRDzBg/Ddj3nCbJnyvv9e3pn9YbkiKUWHCRMmTJi47GAtfTdhwoQJE5cZzARgwoQJE5cp"
-}
-```
+  - name : `String`
+  - dateOfBirth : `Integer`
+  - file : `File`
 
 - Request Header :
-  - Accept : `x-www-form-urlencoded`
+  - Accept : `form-data`
   - Authorization : `Bearer {Access_Token}`
 - Response Body (Success) :
 
