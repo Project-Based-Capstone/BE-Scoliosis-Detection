@@ -1,7 +1,7 @@
 # BE-Scoliosis-Detection
 
 - Base Endpoint Heroku: `https://project-example-123.herokuapp.com/`
-- Base Endpoint VM Instances: `http://35.219.46.228:8080`
+- Base Endpoint VM Instances: `http://34.87.22.120:8080`
 
 ## Login Request
 + Endpoint : ``/api/v1/auth/login``
