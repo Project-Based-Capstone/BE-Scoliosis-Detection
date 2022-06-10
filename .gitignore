@@ -148,5 +148,5 @@ cython_debug/
 test/
 
 ServiceKey_GoogleCloud.json
-Dockerfile
+scoliosis.db
 # End of https://www.toptal.com/developers/gitignore/api/flask

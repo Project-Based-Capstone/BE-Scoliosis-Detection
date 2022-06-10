@@ -27,7 +27,7 @@ def handle_record():
     current_user = get_jwt_identity()
     
     if request.method == 'POST':
-        # try:
+        try:
             name = request.form.get("name", '')
             dateOfBirth = request.form.get("dateOfBirth", '')
             file = request.files['file']
@@ -79,11 +79,11 @@ def handle_record():
                 'error': False,
                 'message': 'Successfully Created',
             }), HTTP_201_CREATED
-        # except:
-        #     return jsonify({
-        #         'error': True,
-        #         'message': 'Internal Server Error.',
-        #     }), HTTP_500_INTERNAL_SERVER_ERROR
+        except:
+            return jsonify({
+                'error': True,
+                'message': 'Internal Server Error',
+            }), HTTP_500_INTERNAL_SERVER_ERROR
     else:
         # page = request.args.get('page', 1, type=int)
         # per_page = request.args.get('per_page', 5, type=int)
