@@ -153,11 +153,12 @@ def delete_record(id):
     if not record:
         return jsonify({'message': 'Item not found'}), HTTP_404_NOT_FOUND
 
-    storage_client = storage.Client()
-    bucket_name = "scoliosis-detection"
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(f"tmp/{(record.image)}")
-    blob.delete()
+    if(os.environ.get("FLASK_LOCATION") == 'local'):
+        storage_client = storage.Client()
+        bucket_name = "scoliosis-detection"
+        bucket = storage_client.bucket(bucket_name)
+        blob = bucket.blob(f"tmp/{(record.image)}")
+        blob.delete()
 
     db.session.delete(record)
     db.session.commit()
