@@ -1,4 +1,5 @@
 
+from flask import jsonify
 import numpy as np
 from src.config.database import db 
 from datetime import datetime
@@ -56,8 +57,5 @@ def predict_image(image):
     new_image=np.expand_dims(new_image,axis=0)
     new_image=np.array(new_image)/255
     new_image=new_image.tolist()
-    result = predict_json(model='scoliosis', instances=new_image)
-    
-    
-    
-    return category[result[0][0]]
+    result = predict_json(model='scoliosis', instances=new_image, version='scoliosisbackendnewmodel')
+    return category[np.argmax(result)]
